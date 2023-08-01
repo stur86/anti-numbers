@@ -1,0 +1,119 @@
+[gd_scene load_steps=15 format=3 uid="uid://cj4bxxaaiomn5"]
+
+[ext_resource type="PackedScene" uid="uid://b1okgjfc35tjc" path="res://objects/number_particle.tscn" id="1_q37pn"]
+[ext_resource type="Texture2D" uid="uid://cwm5g48meeykm" path="res://rect.png" id="1_y8re2"]
+[ext_resource type="Script" path="res://objects/arena.gd" id="2_7fchi"]
+[ext_resource type="Texture2D" uid="uid://c081suhh1whuh" path="res://arena.png" id="2_n4vjq"]
+[ext_resource type="Texture2D" uid="uid://cly2fb5pwy27n" path="res://arrow.svg" id="3_la6kv"]
+[ext_resource type="Script" path="res://objects/launcher_arrow.gd" id="3_lic8q"]
+[ext_resource type="FontFile" uid="uid://bv1e3ubu05qd5" path="res://Rubik-Regular.ttf" id="7_fl747"]
+[ext_resource type="Script" path="res://objects/score_label.gd" id="8_sked0"]
+[ext_resource type="Script" path="res://objects/lives_label.gd" id="9_11mgo"]
+[ext_resource type="Script" path="res://objects/center_container.gd" id="10_6yxy0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_72tgf"]
+radius = 250.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_uouql"]
+font = ExtResource("7_fl747")
+font_size = 30
+font_color = Color(0.1875, 0.1875, 0.238281, 1)
+outline_color = Color(0.713726, 0.662745, 0.811765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b1knw"]
+bg_color = Color(0.980392, 0.952941, 0.886275, 0.705882)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rxvlj"]
+font = ExtResource("7_fl747")
+font_size = 100
+font_color = Color(0.188235, 0.188235, 0.239216, 1)
+
+[node name="MainScene" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(0.984314, 0.956863, 0.890196, 1)
+position = Vector2(512, 384)
+scale = Vector2(27, 21)
+texture = ExtResource("1_y8re2")
+
+[node name="Arena" type="Area2D" parent="."]
+position = Vector2(512, 384)
+linear_damp_space_override = 3
+linear_damp = 0.4
+script = ExtResource("2_7fchi")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena"]
+texture = ExtResource("2_n4vjq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena"]
+shape = SubResource("CircleShape2D_72tgf")
+
+[node name="Launcher" type="Node2D" parent="."]
+position = Vector2(512, 384)
+
+[node name="Arrow" type="Node2D" parent="Launcher"]
+position = Vector2(0, 320)
+script = ExtResource("3_lic8q")
+
+[node name="Sprite2D" type="Sprite2D" parent="Launcher/Arrow"]
+self_modulate = Color(0.188235, 0.188235, 0.239216, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_la6kv")
+
+[node name="Loader" type="Node2D" parent="Launcher/Arrow"]
+position = Vector2(0, 27)
+
+[node name="NumberParticle" parent="Launcher/Arrow/Loader" instance=ExtResource("1_q37pn")]
+
+[node name="ReloadTimer" type="Timer" parent="Launcher/Arrow"]
+one_shot = true
+
+[node name="Particles" type="Node2D" parent="." groups=["ParticleParent"]]
+
+[node name="GUI" type="MarginContainer" parent="."]
+process_mode = 3
+offset_right = 1024.0
+offset_bottom = 80.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ScoreLabel" type="Label" parent="GUI"]
+layout_mode = 2
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_uouql")
+script = ExtResource("8_sked0")
+
+[node name="LivesLabel" type="Label" parent="GUI"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Lives: 3"
+label_settings = SubResource("LabelSettings_uouql")
+script = ExtResource("9_11mgo")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+process_mode = 3
+visible = false
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_right = 1024.0
+offset_bottom = 768.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_6yxy0")
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+custom_minimum_size = Vector2(1024, 768)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b1knw")
+
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_rxvlj")
+
+[connection signal="body_exited" from="Arena" to="Arena" method="_on_body_exited"]
+[connection signal="timeout" from="Launcher/Arrow/ReloadTimer" to="Launcher/Arrow" method="reload_launcher"]
