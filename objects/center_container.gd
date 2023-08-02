@@ -10,3 +10,6 @@ func _input(event):
 	if event.is_action_pressed("Restart"):
 		get_tree().paused = false
 		get_tree().reload_current_scene()
+	elif event.is_action_pressed("Escape"):
+		# Quit game
+		get_tree().quit()
