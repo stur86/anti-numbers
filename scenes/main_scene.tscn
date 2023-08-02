@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://g78bnsj5nv1h" path="res://graphics/square.svg" id="1_0f0je"]
 [ext_resource type="Script" path="res://objects/arena.gd" id="2_7qrao"]
-[ext_resource type="Texture2D" uid="uid://c081suhh1whuh" path="res://arena.png" id="3_82lva"]
-[ext_resource type="Script" path="res://objects/launcher_arrow.gd" id="4_i4xtt"]
-[ext_resource type="Texture2D" uid="uid://cly2fb5pwy27n" path="res://arrow.svg" id="5_r6gby"]
+[ext_resource type="Texture2D" uid="uid://cg5ibtsrt8cp3" path="res://graphics/arena.svg" id="3_qrc0t"]
+[ext_resource type="Script" path="res://scripts/launcher.gd" id="4_2n5kj"]
+[ext_resource type="Texture2D" uid="uid://bs8e4ydnwuc28" path="res://graphics/base.svg" id="5_jxpwi"]
 [ext_resource type="PackedScene" uid="uid://b1okgjfc35tjc" path="res://objects/number_particle.tscn" id="6_50hka"]
 [ext_resource type="FontFile" uid="uid://bv1e3ubu05qd5" path="res://Rubik-Regular.ttf" id="7_xw1ak"]
 [ext_resource type="Script" path="res://objects/score_label.gd" id="8_rt8k1"]
@@ -44,33 +44,33 @@ linear_damp_space_override = 3
 linear_damp = 0.4
 script = ExtResource("2_7qrao")
 
-[node name="Sprite2D" type="Sprite2D" parent="PlayingArea/Arena"]
-texture = ExtResource("3_82lva")
+[node name="ArenaSprite" type="Sprite2D" parent="PlayingArea/Arena"]
+self_modulate = Color(0.1875, 0.1875, 0.238281, 1)
+texture = ExtResource("3_qrc0t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayingArea/Arena"]
 visible = false
 shape = SubResource("CircleShape2D_72tgf")
 
+[node name="Particles" type="Node2D" parent="PlayingArea" groups=["ParticleParent"]]
+position = Vector2(-960, -540)
+
 [node name="Launcher" type="Node2D" parent="PlayingArea"]
+script = ExtResource("4_2n5kj")
 
-[node name="Arrow" type="Node2D" parent="PlayingArea/Launcher"]
-position = Vector2(0, 320)
-script = ExtResource("4_i4xtt")
+[node name="Platform" type="Node2D" parent="PlayingArea/Launcher"]
+position = Vector2(0, 460)
 
-[node name="Sprite2D" type="Sprite2D" parent="PlayingArea/Launcher/Arrow"]
+[node name="Loader" type="Node2D" parent="PlayingArea/Launcher/Platform"]
+
+[node name="NumberParticle" parent="PlayingArea/Launcher/Platform/Loader" instance=ExtResource("6_50hka")]
+
+[node name="PlatformSprite" type="Sprite2D" parent="PlayingArea/Launcher/Platform"]
 self_modulate = Color(0.188235, 0.188235, 0.239216, 1)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_r6gby")
+texture = ExtResource("5_jxpwi")
 
-[node name="Loader" type="Node2D" parent="PlayingArea/Launcher/Arrow"]
-position = Vector2(0, 27)
-
-[node name="NumberParticle" parent="PlayingArea/Launcher/Arrow/Loader" instance=ExtResource("6_50hka")]
-
-[node name="ReloadTimer" type="Timer" parent="PlayingArea/Launcher/Arrow"]
+[node name="ReloadTimer" type="Timer" parent="PlayingArea/Launcher"]
 one_shot = true
-
-[node name="Particles" type="Node2D" parent="." groups=["ParticleParent"]]
 
 [node name="GUI" type="MarginContainer" parent="."]
 process_mode = 3
@@ -119,4 +119,4 @@ text = "GAME OVER"
 label_settings = SubResource("LabelSettings_rxvlj")
 
 [connection signal="body_exited" from="PlayingArea/Arena" to="PlayingArea/Arena" method="_on_body_exited"]
-[connection signal="timeout" from="PlayingArea/Launcher/Arrow/ReloadTimer" to="PlayingArea/Launcher/Arrow" method="reload_launcher"]
+[connection signal="timeout" from="PlayingArea/Launcher/ReloadTimer" to="PlayingArea/Launcher" method="reload_launcher"]

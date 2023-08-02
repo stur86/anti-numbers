@@ -1,19 +1,19 @@
 [gd_scene load_steps=7 format=3 uid="uid://b1okgjfc35tjc"]
 
-[ext_resource type="Script" path="res://objects/number_particle.gd" id="1_77a6h"]
-[ext_resource type="Texture2D" uid="uid://dmgwklckjn6rr" path="res://circle.png" id="1_srxa4"]
+[ext_resource type="Script" path="res://scripts/number_particle.gd" id="1_v6r8x"]
+[ext_resource type="Texture2D" uid="uid://kmatofo2cds1" path="res://graphics/circle_edge.svg" id="2_av0v8"]
 [ext_resource type="FontFile" uid="uid://bv1e3ubu05qd5" path="res://Rubik-Regular.ttf" id="2_jsiup"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tjpi3"]
 friction = 0.0
 bounce = 0.3
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_f462o"]
-radius = 32.0
-
 [sub_resource type="LabelSettings" id="LabelSettings_u2fcb"]
 font = ExtResource("2_jsiup")
-font_size = 24
+font_size = 45
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f462o"]
+radius = 53.0
 
 [node name="NumberParticle" type="RigidBody2D" groups=["Particles"]]
 center_of_mass_mode = 1
@@ -23,17 +23,13 @@ max_contacts_reported = 3
 contact_monitor = true
 lock_rotation = true
 freeze = true
-script = ExtResource("1_77a6h")
+script = ExtResource("1_v6r8x")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_srxa4")
+[node name="ParticleSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_av0v8")
 metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_f462o")
-metadata/_edit_lock_ = true
-
-[node name="Label" type="Label" parent="."]
+[node name="ChargeLabel" type="Label" parent="ParticleSprite"]
 offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
@@ -43,6 +39,10 @@ label_settings = SubResource("LabelSettings_u2fcb")
 horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 0
+metadata/_edit_lock_ = true
+
+[node name="ParticleCollisionBox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_f462o")
 metadata/_edit_lock_ = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

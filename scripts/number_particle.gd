@@ -10,13 +10,12 @@ func _ready():
 	charge *= sign(randf()-0.5)
 	# Set the text to own charge
 	var label_sign = "+" if charge > 0 else ""
-	$Label.text = label_sign + str(charge)
+	$ParticleSprite/ChargeLabel.text = label_sign + str(charge)
 	
 	# Base the color off the charge
 	var h = (charge+9)/20.0
 	var c = Color.from_hsv(h, 0.7, 0.8)
-	$Sprite2D.modulate = c
-	$Label.modulate = c
+	$ParticleSprite.modulate = c
 	
 	set_physics_process(true)
 	
