@@ -46,10 +46,13 @@ func _on_body_entered(body):
 	var other_charge = body.get("charge")
 	if other_charge == -charge:
 		# Annihilation!
-		body.queue_free()
-		queue_free()
+		body.explode()
+		explode()
 		ScoreKeeper.add_score(50)
 
+func explode():
+	$Explosion.modulate = $ParticleSprite.modulate
+	$AnimationPlayer.play("Explode")
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	# Destroy and lose one life
