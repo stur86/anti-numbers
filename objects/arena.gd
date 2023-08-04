@@ -17,8 +17,8 @@ func _physics_process(_delta):
 
 func _on_body_exited(body):
 	var r = (body.global_position-global_position).length()
-	var max_r = $CollisionShape2D.shape.radius
+	var max_r = $ArenaArea.shape.radius
 	if r >= max_r:
-		# It left
+		# It left, wasn't just destroyed
 		body.queue_free()
 		ScoreKeeper.lose_life()

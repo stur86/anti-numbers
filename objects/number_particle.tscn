@@ -1,12 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://b1okgjfc35tjc"]
 
+[ext_resource type="PhysicsMaterial" uid="uid://3w185p5kmief" path="res://objects/number_particle_material.tres" id="1_j4bnq"]
 [ext_resource type="Script" path="res://scripts/number_particle.gd" id="1_v6r8x"]
 [ext_resource type="Texture2D" uid="uid://kmatofo2cds1" path="res://graphics/circle_edge.svg" id="2_av0v8"]
 [ext_resource type="FontFile" uid="uid://bv1e3ubu05qd5" path="res://Rubik-Regular.ttf" id="2_jsiup"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tjpi3"]
-friction = 0.0
-bounce = 0.3
 
 [sub_resource type="LabelSettings" id="LabelSettings_u2fcb"]
 font = ExtResource("2_jsiup")
@@ -17,7 +14,7 @@ radius = 53.0
 
 [node name="NumberParticle" type="RigidBody2D" groups=["Particles"]]
 center_of_mass_mode = 1
-physics_material_override = SubResource("PhysicsMaterial_tjpi3")
+physics_material_override = ExtResource("1_j4bnq")
 continuous_cd = 2
 max_contacts_reported = 3
 contact_monitor = true
