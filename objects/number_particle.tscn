@@ -39,6 +39,7 @@ justification_flags = 0
 metadata/_edit_lock_ = true
 
 [node name="ParticleCollisionBox" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_f462o")
 metadata/_edit_lock_ = true
 

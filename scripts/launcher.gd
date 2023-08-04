@@ -34,6 +34,10 @@ func launch_particle():
 func reload_launcher():
 	# Create a new one
 	var new_p = Particle.instantiate()
+	# Set particle charge
+	var q = randi_range(1, new_p.max_charge)
+	q *= sign(randf()-0.5)
+	new_p.charge = q
 	$Platform/Loader.add_child(new_p)
 	new_p.position = Vector2.ZERO
 

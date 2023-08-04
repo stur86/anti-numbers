@@ -103,14 +103,14 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_right = 1024.0
-offset_bottom = 768.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_g2703")
 
 [node name="Panel" type="Panel" parent="CenterContainer"]
-custom_minimum_size = Vector2(1024, 768)
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_b1knw")
 
