@@ -16,7 +16,7 @@ func _physics_process(_delta):
 
 
 func _on_body_exited(body):
-	if not body.freeze:
+	if body.active:
 		# It left, wasn't just destroyed
 		body.vanish()
 		ScoreKeeper.lose_life()

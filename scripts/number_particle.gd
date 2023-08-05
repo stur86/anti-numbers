@@ -4,6 +4,7 @@ extends RigidBody2D
 @export var max_charge: int = 7
 
 const F0 = 1e6
+var active = false
 
 func _ready():
 	
@@ -21,6 +22,7 @@ func _ready():
 	set_physics_process(true)
 	
 func launch(v: Vector2):
+	active = true
 	freeze = false
 	apply_impulse(v)
 
@@ -48,7 +50,7 @@ func _on_body_entered(body):
 	
 	var other_charge = body.get("charge")
 	if other_charge == -charge:
-		if body.freeze or freeze:
+		if not (body.active and active):
 			return
 		# Annihilation!
 		body.explode()
@@ -56,12 +58,15 @@ func _on_body_entered(body):
 		ScoreKeeper.add_score(ScoreKeeper.PAIR_SCORE)
 
 func explode():
-	freeze = true
+	active = false
+	set_deferred("freeze", true)
 	$Explosion.modulate = $ParticleMask/ParticleSprite.modulate
+	$Explosion/Burst.process_mode = Node.PROCESS_MODE_INHERIT
 	$AnimationPlayer.play("Explode")
 
 func vanish():
-	freeze = true
+	active = false
+	set_deferred("freeze", true)
 	$AnimationPlayer.play("Vanish")
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

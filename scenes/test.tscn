@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbmujdhoor5pr"]
+
+[ext_resource type="PackedScene" uid="uid://b1okgjfc35tjc" path="res://objects/number_particle.tscn" id="1_s1owy"]
+
+[sub_resource type="GDScript" id="GDScript_cuslh"]
+script/source = "extends Node2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	$NumberParticle.freeze = false
+	$NumberParticle2.freeze = false
+	$NumberParticle2/Explosion/Burst.process_mode = Node.PROCESS_MODE_INHERIT
+	$NumberParticle/Explosion/Burst.process_mode = Node.PROCESS_MODE_INHERIT
+	
+"
+
+[node name="Node2D" type="Node2D"]
+script = SubResource("GDScript_cuslh")
+
+[node name="NumberParticle" parent="." instance=ExtResource("1_s1owy")]
+
+[node name="NumberParticle2" parent="." instance=ExtResource("1_s1owy")]
+position = Vector2(99, 63)

@@ -40,6 +40,7 @@ texture = ExtResource("1_0f0je")
 position = Vector2(960, 540)
 
 [node name="Arena" type="Area2D" parent="PlayingArea"]
+input_pickable = false
 linear_damp_space_override = 3
 linear_damp = 1.5
 script = ExtResource("2_7qrao")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b1okgjfc35tjc"]
+[gd_scene load_steps=19 format=3 uid="uid://b1okgjfc35tjc"]
 
 [ext_resource type="PhysicsMaterial" uid="uid://3w185p5kmief" path="res://objects/number_particle_material.tres" id="1_j4bnq"]
 [ext_resource type="Script" path="res://scripts/number_particle.gd" id="1_v6r8x"]
@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://bv1e3ubu05qd5" path="res://Rubik-Regular.ttf" id="2_jsiup"]
 [ext_resource type="Texture2D" uid="uid://dvynq78vycxdc" path="res://graphics/vanish_strip.png" id="3_cir5y"]
 [ext_resource type="Texture2D" uid="uid://bxpychvsuu1xh" path="res://graphics/circle_full.svg" id="5_sdork"]
+[ext_resource type="Script" path="res://scripts/burst.gd" id="7_1cag4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u2fcb"]
 font = ExtResource("2_jsiup")
@@ -32,6 +33,9 @@ scale_min = 0.1
 scale_max = 0.3
 scale_curve = SubResource("CurveTexture_s0ci2")
 attractor_interaction_enabled = false
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ajep2"]
+radius = 120.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f462o"]
 radius = 53.0
@@ -277,6 +281,14 @@ texture = ExtResource("5_sdork")
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.8
+
+[node name="Burst" type="Area2D" parent="Explosion"]
+process_mode = 4
+input_pickable = false
+script = ExtResource("7_1cag4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Explosion/Burst"]
+shape = SubResource("CircleShape2D_ajep2")
 
 [node name="ParticleCollisionBox" type="CollisionShape2D" parent="."]
 visible = false
