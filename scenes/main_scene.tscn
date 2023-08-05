@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://objects/center_container.gd" id="10_g2703"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_72tgf"]
-radius = 250.0
+radius = 400.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_uouql"]
 font = ExtResource("7_xw1ak")
@@ -49,7 +49,6 @@ self_modulate = Color(0.1875, 0.1875, 0.238281, 1)
 texture = ExtResource("3_qrc0t")
 
 [node name="ArenaArea" type="CollisionShape2D" parent="PlayingArea/Arena"]
-visible = false
 shape = SubResource("CircleShape2D_72tgf")
 
 [node name="Particles" type="Node2D" parent="PlayingArea" groups=["ParticleParent"]]

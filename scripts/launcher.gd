@@ -6,6 +6,11 @@ extends Node2D
 
 const Particle = preload("res://objects/number_particle.tscn")
 
+const SP_INTERP = 0.3
+var target_speed = 0.0
+var actual_speed = 0.0
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_process(true)
@@ -44,9 +49,13 @@ func reload_launcher():
 func _process(delta):
 	
 	if Input.is_action_pressed("Right"):
-		rotate_launcher(-rot_speed*delta)
+		target_speed = -rot_speed
 	elif Input.is_action_pressed("Left"):
-		rotate_launcher(rot_speed*delta)
+		target_speed = rot_speed
+	else:
+		target_speed = 0.0
+	actual_speed = lerp(actual_speed, target_speed, SP_INTERP)
+	rotate_launcher(actual_speed*delta)
 	
 	if Input.is_action_just_pressed("Launch"):
 		launch_particle()
