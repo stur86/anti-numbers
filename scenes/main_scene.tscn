@@ -16,7 +16,7 @@ radius = 400.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_uouql"]
 font = ExtResource("7_xw1ak")
-font_size = 30
+font_size = 50
 font_color = Color(0.1875, 0.1875, 0.238281, 1)
 outline_color = Color(0.713726, 0.662745, 0.811765, 1)
 
@@ -74,8 +74,7 @@ one_shot = true
 
 [node name="GUI" type="MarginContainer" parent="."]
 process_mode = 3
-visible = false
-offset_right = 1024.0
+offset_right = 1920.0
 offset_bottom = 80.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20

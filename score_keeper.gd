@@ -7,6 +7,8 @@ signal new_score
 signal new_lives
 signal game_over
 
+const PAIR_SCORE = 100
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	score = 0

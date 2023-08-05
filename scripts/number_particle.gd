@@ -6,6 +6,9 @@ extends RigidBody2D
 const F0 = 1e6
 
 func _ready():
+	
+	freeze = true
+	
 	# Set the text to own charge
 	var label_sign = "+" if charge > 0 else ""
 	$ParticleSprite/ChargeLabel.text = label_sign + str(charge)
@@ -45,12 +48,15 @@ func _on_body_entered(body):
 	
 	var other_charge = body.get("charge")
 	if other_charge == -charge:
+		if body.freeze:
+			return
 		# Annihilation!
 		body.explode()
 		explode()
-		ScoreKeeper.add_score(50)
+		ScoreKeeper.add_score(ScoreKeeper.PAIR_SCORE)
 
 func explode():
+	freeze = true
 	$Explosion.modulate = $ParticleSprite.modulate
 	$AnimationPlayer.play("Explode")
 
