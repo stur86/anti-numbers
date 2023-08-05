@@ -11,12 +11,12 @@ func _ready():
 	
 	# Set the text to own charge
 	var label_sign = "+" if charge > 0 else ""
-	$ParticleSprite/ChargeLabel.text = label_sign + str(charge)
+	$ParticleMask/ParticleSprite/ChargeLabel.text = label_sign + str(charge)
 	
 	# Base the color off the charge
 	var h = (charge+max_charge)/(2.2*max_charge)
 	var c = Color.from_hsv(h, 0.9, 0.8)
-	$ParticleSprite.modulate = c
+	$ParticleMask/ParticleSprite.modulate = c
 	
 	set_physics_process(true)
 	
@@ -48,7 +48,7 @@ func _on_body_entered(body):
 	
 	var other_charge = body.get("charge")
 	if other_charge == -charge:
-		if body.freeze:
+		if body.freeze or freeze:
 			return
 		# Annihilation!
 		body.explode()
@@ -57,10 +57,14 @@ func _on_body_entered(body):
 
 func explode():
 	freeze = true
-	$Explosion.modulate = $ParticleSprite.modulate
+	$Explosion.modulate = $ParticleMask/ParticleSprite.modulate
 	$AnimationPlayer.play("Explode")
+
+func vanish():
+	freeze = true
+	$AnimationPlayer.play("Vanish")
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	# Destroy and lose one life
 	ScoreKeeper.lose_life()
-	queue_free()
+	vanish()
